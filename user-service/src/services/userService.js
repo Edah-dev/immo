@@ -37,6 +37,12 @@ class UserService {
     return await User.updateProfile(id, { firstName, lastName, phoneNumber });
   }
 
+  static async listAllUsers() {
+    const query = 'SELECT id, email, role, first_name, last_name, phone_number FROM users';
+    const { rows } = await pool.query(query);
+    return rows;
+  }
+
   static async sendVerificationEmail(email) {
     const mailOptions = {
       from: process.env.EMAIL_USER,

@@ -236,7 +236,7 @@ La table `Users` sera la table principale pour ce module. Voici un exemple de st
 
 ```sql
 CREATE TABLE Users (
-    id UUID PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     email VARCHAR(255) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
     role VARCHAR(50) NOT NULL, -- 'propriétaire', 'locataire', 'admin'
@@ -245,9 +245,25 @@ CREATE TABLE Users (
     phone_number VARCHAR(20),
     profile_picture_url VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     is_verified BOOLEAN DEFAULT FALSE
 );
+
+-- Création d'une fonction qui met à jour updated_at avant chaque modification
+CREATE FUNCTION update_updated_at_column()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = CURRENT_TIMESTAMP;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Création du trigger qui applique la fonction à chaque update
+CREATE TRIGGER trigger_update_updated_at
+BEFORE UPDATE ON Users
+FOR EACH ROW
+EXECUTE FUNCTION update_updated_at_column();
+
 
 CREATE TABLE Permissions (
     id UUID PRIMARY KEY,
@@ -261,14 +277,14 @@ CREATE TABLE Permissions (
 Exemple de permissions
 ```sql
 INSERT INTO Permissions (id, role, resource, action) VALUES
-(uuid_generate_v4(), 'admin', 'annonce', 'create'),
-(uuid_generate_v4(), 'admin', 'annonce', 'read'),
-(uuid_generate_v4(), 'admin', 'annonce', 'update'),
-(uuid_generate_v4(), 'admin', 'annonce', 'delete'),
-(uuid_generate_v4(), 'propriétaire', 'annonce', 'create'),
-(uuid_generate_v4(), 'propriétaire', 'annonce', 'read'),
-(uuid_generate_v4(), 'propriétaire', 'annonce', 'update'),
-(uuid_generate_v4(), 'locataire', 'annonce', 'read');
+(gen_random_uuid(), 'admin', 'annonce', 'create'),
+(gen_random_uuid(), 'admin', 'annonce', 'read'),
+(gen_random_uuid(), 'admin', 'annonce', 'update'),
+(gen_random_uuid(), 'admin', 'annonce', 'delete'),
+(gen_random_uuid(), 'propriétaire', 'annonce', 'create'),
+(gen_random_uuid(), 'propriétaire', 'annonce', 'read'),
+(gen_random_uuid(), 'propriétaire', 'annonce', 'update'),
+(gen_random_uuid(), 'locataire', 'annonce', 'read');
 ```
 
 #### **2.2 API Endpoints**

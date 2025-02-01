@@ -38,6 +38,15 @@ class UserController {
       res.status(400).json({ error: error.message });
     }
   }
+
+  static async listAllUsers(req, res) {
+    try {
+      const users = await UserService.listAllUsers();
+      res.json(users);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
 }
 
 module.exports = UserController;

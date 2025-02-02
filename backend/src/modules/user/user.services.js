@@ -20,7 +20,7 @@ class UserService {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) throw new Error('Mot de passe incorrect');
 
-    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN });
     return { user, token };
   }
 

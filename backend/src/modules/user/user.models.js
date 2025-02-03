@@ -27,10 +27,20 @@ const PermissionSchema = new mongoose.Schema({
 });
 
 
+const DocumentSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // Référence à l'utilisateur
+  type: { type: String, enum: ['cni', 'passeport', 'justificatif_domicile'], required: true }, // Type de document
+  url: { type: String, required: true }, // URL du document sur le CDN
+  status: { type: String, enum: ['pending', 'approved', 'rejected'], default: 'pending' }, // Statut de vérification
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now },
+});
+
 
 module.exports = {
     Permission: mongoose.model('Permission', PermissionSchema),
     Role: mongoose.model('Role', RoleSchema),
-    User: mongoose.model('User', UserSchema)
+    User: mongoose.model('User', UserSchema),
+    Document: mongoose.model('Document', DocumentSchema),
 };
 

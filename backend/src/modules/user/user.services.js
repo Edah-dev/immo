@@ -1,5 +1,6 @@
 const User = require('./user.models').User;
 const Role = require('./user.models').Role;
+const Document = require('./user.models').Document;
 
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -20,6 +21,8 @@ class UserService {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) throw new Error('Mot de passe incorrect');
 
+    console.log(process.env.JWT_EXPIRES_IN);
+
     const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN });
     return { user, token };
   }
@@ -31,6 +34,16 @@ class UserService {
   static async updateProfile(id, { firstName, lastName, phoneNumber }) {
     return await User.findByIdAndUpdate(id, { firstName, lastName, phoneNumber }, { new: true });
   }
+
+  static async verifyUser(userId) {
+    const documents = await Document.find({ userId });
+    const allApproved = documents.every((doc) => doc.status === 'approved');
+
+    if (allApproved) {
+      await User.findByIdAndUpdate(userId, { isVerified: true });
+    }
+  }
+
 }
 
 module.exports = UserService;

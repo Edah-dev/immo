@@ -82,8 +82,8 @@ class UserController {
 
   static async resetPassword(req, res) {
     try {
-      const { token, newPassword } = req.body;
-      await UserService.resetPassword(token, newPassword);
+      const { token, newpassword } = req.body;
+      await UserService.resetPassword(token, newpassword);
       res.json({ message: 'Mot de passe réinitialisé avec succès' });
     } catch (error) {
       res.status(400).json({ error: error.message });

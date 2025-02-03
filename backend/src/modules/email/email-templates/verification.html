@@ -1,0 +1,20 @@
+<!-- verification.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f4f4f4; }
+        .container { background-color: white; border-radius: 8px; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .btn { display: block; width: 250px; margin: 20px auto; padding: 12px 20px; background-color: #007bff; color: white; text-align: center; text-decoration: none; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Confirmez votre compte</h1>
+        <p>Bonjour {{firstName}} {{lastName}},</p>
+        <p>Merci de vous être inscrit. Cliquez sur le bouton ci-dessous pour vérifier votre compte :</p>
+        <a href="{{verificationLink}}" class="btn">Vérifier mon compte</a>
+    </div>
+</body>
+</html>

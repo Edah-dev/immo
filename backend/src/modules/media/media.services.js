@@ -50,6 +50,26 @@ class MediaService {
 
     return media;
   }
+
+  static async uploadListingFiles(file, type) {
+    const fileStream = fs.createReadStream(file.path);
+
+    const uploadParams = {
+      Bucket: process.env.IDRIVE_E2_BUCKET_NAME,
+      Key: `${type}/${Date.now()}_${path.basename(file.originalname)}`, // Ex: images/12345_photo.jpg
+      Body: fileStream,
+      ACL: 'public-read', // Rendre le fichier public
+    };
+
+    // Téléverser le fichier sur IDrive e2
+    const uploadResult = await s3.upload(uploadParams).promise();
+
+    // Supprimer le fichier temporaire
+    fs.unlinkSync(file.path);
+
+    return uploadResult.Location; // Retourner l'URL publique du fichier
+  }
+
 }
 
 module.exports = MediaService;

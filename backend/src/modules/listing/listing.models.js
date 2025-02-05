@@ -8,6 +8,8 @@ const ListingSchema = new mongoose.Schema({
   location: { type: String, required: true },
   type: { type: String, enum: ['maison', 'appartement', 'chambre'], required: true },
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  images: [{ type: String }], // URLs des images
+  videos: [{ type: String }], // URLs des vidéos
   amenities: {
     wifi: { type: Boolean, default: false },
     kitchen: { type: Boolean, default: false },

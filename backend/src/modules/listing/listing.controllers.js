@@ -45,6 +45,30 @@ class ListingController {
       res.status(400).json({ error: error.message });
     }
   }
+
+
+  static async addMedia(req, res) {
+    try {
+      const { listingId } = req.params;
+      const files = req.files; // Fichiers uploadés via Multer
+      const listing = await ListingService.addMedia(listingId, files);
+      res.json(listing);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
+
+  static async deleteMedia(req, res) {
+    try {
+      const { listingId, mediaType, mediaUrl } = req.params;
+      const listing = await ListingService.deleteMedia(listingId, mediaType, mediaUrl);
+      res.json({ message: 'Média supprimé avec succès', listing });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
 }
 
 module.exports = ListingController;

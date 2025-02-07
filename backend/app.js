@@ -3,6 +3,8 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 const routes = require('./src/modules');
 const dotenv = require('dotenv');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./docs/swagger.json');
 
 dotenv.config();
 
@@ -18,6 +20,9 @@ connectDB();
 // Routes
 app.use('/', routes);
 
+
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // Gestion des erreurs
 app.use((err, req, res, next) => {
   console.error(err.stack);

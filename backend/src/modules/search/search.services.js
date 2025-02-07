@@ -28,6 +28,8 @@ class SearchService {
             if (value === 'true') query[`amenities.${key}`] = true;
           }
         }
+
+        console.log(query);
     
         const results = await Listing.find(query);
     

@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "swagger": "node ./docs/swagger.js"
   },
   "keywords": [
     "user",
@@ -25,6 +26,8 @@
     "mongoose": "^8.9.6",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.10.0",
-    "redis": "^4.7.0"
+    "redis": "^4.7.0",
+    "swagger-autogen": "^2.23.7",
+    "swagger-ui-express": "^5.0.1"
   }
 }

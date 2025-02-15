@@ -5,8 +5,16 @@ const ListingSchema = new mongoose.Schema({
   description: { type: String, required: true },
   price: { type: Number, required: true },
   surface: { type: Number, required: true },
-  location: { type: String, required: true },
-  type: { type: String, enum: ['maison', 'appartement', 'chambre'], required: true },
+  address: { type: String, required: true },
+  country: { type: String, required: true },
+  city: { type: String, required: true },
+  zipCode: { type: String, required: true },
+  state : { type: String, required: true },
+  numberOfRooms: { type: Number, required: true },
+  yearOfConstruction: { type: Number },
+  status: { type: String, enum: ['pending', 'published', 'sold', 'deleted'], default: 'pending' },
+  type: { type: String, enum: ['house', 'apartment', 'office', 'land', 'other'], required: true },
+  category: { type: String, enum: ['sale', 'rent'], required: true },
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   images: [{ type: String }], // URLs des images
   videos: [{ type: String }], // URLs des vidéos
@@ -31,5 +39,8 @@ const ListingSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 });
+
+
+
 
 module.exports = mongoose.model('Listing', ListingSchema);

@@ -1,5 +1,5 @@
 const User = require('./user.models').User;
-const Role = require('./user.models').Role;
+const Role = require('../role/models').Role;
 const Document = require('./user.models').Document;
 const { generateAccessToken, generateRefreshToken } = require('../../../utils/jwt');
 //const nodemailer = require('nodemailer');
@@ -37,7 +37,7 @@ class UserService {
   // }
 
   static async login(email, password) {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).populate('role');
     if (!user) throw new Error('Utilisateur non trouvé');
 
     const isMatch = await bcrypt.compare(password, user.password);

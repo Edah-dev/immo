@@ -5,7 +5,7 @@
 //import { User,Role } from '../src/modules/user/user.models';
 
 const User = require('../src/modules/user/user.models').User;
-const Role = require('../src/modules/user/user.models').Role;
+const Role = require('../src/modules/role/models').Role;
 
 async function checkPermission(userId, resource, action) {
   const user = await User.findById(userId).populate('role');

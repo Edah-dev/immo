@@ -1,4 +1,4 @@
-const Permission = require('./user.models').Permission;
+const Permission = require('./models').Permission;
 
 class PermissionService {
   static async createPermission(resource, action) {

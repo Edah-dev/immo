@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+
 const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
@@ -16,18 +17,6 @@ const UserSchema = new mongoose.Schema({
 
 
 
-const RoleSchema = new mongoose.Schema({
-  name: { type: String, required: true, unique: true }, // Ex: 'propriétaire', 'locataire', 'admin'
-  permissions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Permission' }],
-});
-
-
-const PermissionSchema = new mongoose.Schema({
-  resource: { type: String, required: true }, // Ex: 'annonce', 'utilisateur'
-  action: { type: String, required: true },  // Ex: 'create', 'read', 'update', 'delete'
-});
-
-
 const DocumentSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // Référence à l'utilisateur
   type: { type: String, enum: ['cni', 'passeport', 'justificatif_domicile'], required: true }, // Type de document
@@ -40,8 +29,6 @@ const DocumentSchema = new mongoose.Schema({
 
 
 module.exports = {
-    Permission: mongoose.model('Permission', PermissionSchema),
-    Role: mongoose.model('Role', RoleSchema),
     User: mongoose.model('User', UserSchema),
     Document: mongoose.model('Document', DocumentSchema),
 };

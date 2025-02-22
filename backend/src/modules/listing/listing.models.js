@@ -41,6 +41,9 @@ const ListingSchema = new mongoose.Schema({
 });
 
 
-
+ListingSchema.index({ title: 'text', description: 'text', address: 'text', country: 'text', city: 'text', zipCode: 'text', state: 'text' });
+ListingSchema.index({ price: 1 });
+ListingSchema.index({ surface: 1 });
+//ListingSchema.index({ SchemaTypeOptions})
 
 module.exports = mongoose.model('Listing', ListingSchema);

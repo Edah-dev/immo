@@ -1,6 +1,8 @@
 
-const Role = require('../modules/user/user.models').Role;
-const Permission = require('../modules/user/user.models').Permission;
+//const Role = require('../modules/user/user.models').Role;
+//const Permission = require('../modules/user/user.models').Permission;
+const Role = require('../src/modules/role/models').Role;
+const Permission = require('../src/modules/role/models').Permission;
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 

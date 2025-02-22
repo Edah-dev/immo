@@ -5,6 +5,7 @@ const routes = require('./src/modules');
 const dotenv = require('dotenv');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./docs/swagger.json');
+const initRoute = require('./src/scripts/init')
 
 dotenv.config();
 
@@ -19,6 +20,8 @@ connectDB();
 
 // Routes
 app.use('/', routes);
+// Route d'initialisation
+app.use('/db', initRoute);
 
 
 
